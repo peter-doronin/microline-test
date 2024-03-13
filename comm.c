@@ -27,10 +27,13 @@ int comm_recieve_msg(IO io_handle, ADDR_T src, ADDR_T dst, char * data, int size
   int start_time = os_gettime_milliseconds();
   int recieve = 1;
   int timeout_elapsed = 0;
-  while(recieve){
-    timeout_elapsed = os_gettime_milliseconds() - start_time;
-    if(timeout_elapsed > timeout) return COMM_TIMEOUT;
+  while(timeout_elapsed > 0){
+    timeout_elapsed = timeout - (os_gettime_milliseconds() - start_time);
+    if(timeout_elapsed > timeout) 
     int err = read(io_handle, data, size, timeout_elapsed);
-    if(err == IO_TIMEOUT) return COMM_TIMEOUT;
-    if(err < 0) return COMM_ERROR;
+    if(err == 0){
+      
+    } else return err;
+  }
+  return COMM_TIMEOUT;
 }
