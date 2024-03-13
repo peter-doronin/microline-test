@@ -23,7 +23,12 @@ const char preamble[] = {0x01, 0x02, 0x03, 0x04};
 int comm_send_msg(IO io_handle, ADDR_T src, ADDR_T dst, char * data, int size){
 }
 
-int comm_recieve_msg(IO io_handle, ADDR_T src, ADDR_T dst, char * data, int size, int timeout){
+/*
+Функция приема данных, принимает в качестве аргументов: дескриптор устройства ввода-вывода, указатель на буфер приема, значение таймаута.
+Возвращает неотрицательный результат в случае успеха, и отрицательный в случае ошибки.
+Прием осуществляется в пределах таймаута, пока не будет получено одно сообщение, соответствующее условиям: заданная преамбула, адрес получателя, и валидной контрольной суммой.
+  */
+int comm_recieve_msg(IO io_handle, ADDR_T dst, char * data, int timeout){
   int start_time = os_gettime_milliseconds();
   int recieve = 1;
   int timeout_elapsed = 0;
@@ -33,7 +38,7 @@ int comm_recieve_msg(IO io_handle, ADDR_T src, ADDR_T dst, char * data, int size
     int err = read(io_handle, data, size, timeout_elapsed);
     if(err == 0){
       
-    } else return err;
+    } else return -1;
   }
-  return COMM_TIMEOUT;
+  return -1;
 }
