@@ -1,6 +1,5 @@
 #include "comm.h"
-
-#define ADDR_T uint8_t;
+#include "io.h"
 
 unsigned char crc(unsigned char * data, size_t size){
   if(size == 0) return 0;
