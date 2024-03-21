@@ -1,3 +1,5 @@
+#define ADDR_T uint8_t;
+
 enum comm_status {
 COMM_TIMEOUT = -1,
 COMM_IO_ERROR = -2,
